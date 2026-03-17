@@ -1,4 +1,4 @@
-# 🛡️ FraudGuard AI - Sistema Inteligente de Prevención de Fraude
+# Sistema Inteligente de Prevención de Fraude
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue.svg) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-1.7-green.svg) ![Machine Learning](https://img.shields.io/badge/Machine_Learning-Scikit_Learn-orange.svg)
 
