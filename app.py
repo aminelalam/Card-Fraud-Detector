@@ -1,7 +1,4 @@
-"""
-Dashboard Empresarial de Detección de Fraude.
-Nivel Analítico y Estratégico Senior.
-"""
+
 import os
 import json
 import numpy as np
@@ -17,7 +14,7 @@ RUTA_DATOS = os.path.join(DIR_RAIZ, "creditcard.zip")
 
 st.set_page_config(page_title="Detección de Fraude", layout="wide", initial_sidebar_state="collapsed")
 
-# ── Sistema de Diseño Bold Typography ──
+# ── cosas de estilo ──
 st.markdown("""<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 .stApp { background: #0A0A0A; font-family: 'Inter', sans-serif; color: #FAFAFA; }
@@ -109,9 +106,7 @@ with c3:
     </div>''', unsafe_allow_html=True)
 
 
-# ==============================================================================
-# ANÁLISIS EXPLORATORIO (EDA)
-# ==============================================================================
+
 st.markdown("<h2>ANÁLISIS EXPLORATORIO</h2>", unsafe_allow_html=True)
 
 g1, g2 = st.columns(2)
@@ -148,9 +143,8 @@ with g2:
     st.plotly_chart(fig_kde, use_container_width=True)
 
 
-# ==============================================================================
 # MAPA DE TRANSACCIONES (SCATTER PLOT)
-# ==============================================================================
+
 st.markdown("<h2>DISTRIBUCIÓN DE TRANSACCIONES</h2>", unsafe_allow_html=True)
 st.markdown("<p style='color:#737373; margin-bottom: 1rem;'>Representación de las transacciones en el espacio de características anonimizadas del dataset (V1 y V2 son las dos variables con mayor varianza, obtenidas por PCA sobre los datos originales de la tarjeta de crédito). Se observa cómo el fraude se concentra en regiones diferenciadas.</p>", unsafe_allow_html=True)
 
@@ -192,9 +186,7 @@ fig_scatter.update_yaxes(showgrid=True, gridcolor="#1A1A1A", title_font=dict(col
 st.plotly_chart(fig_scatter, use_container_width=True)
 
 
-# ==============================================================================
-# AUDITORÍA DE IMPACTO FINANCIERO
-# ==============================================================================
+# IMPACTO FINANCIERO
 st.markdown("<h2>IMPACTO DE NEGOCIO (DATOS DE VALIDACIÓN)</h2>", unsafe_allow_html=True)
 
 media_fraude = df[df["Class"]==1]["Amount"].mean()
@@ -223,7 +215,7 @@ with col_roi2:
 with col_roi3:
     st.markdown(f'''
     <div class="kpi-card highlight">
-        <div class="kpi-label" title="Fraude no detectado que logró pasar el filtro del modelo (FN × importe medio).">Fraude que nos Han Colado</div>
+        <div class="kpi-label" title="Fraude no detectado que logró pasar el filtro del modelo (FN × importe medio).">Fraude que no hemos podido detectar</div>
         <div class="kpi-value" style="color: #FF3D00;">{dinero_fugado/1000:.1f}k €</div>
     </div>''', unsafe_allow_html=True)
 
