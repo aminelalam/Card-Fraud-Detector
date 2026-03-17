@@ -17,7 +17,6 @@ FraudGuard AI es la solución integral a la problemática crítica del fraude fi
 
 El componente central es un modelo **XGBoost optimizado** (con hiperparámetros afinados vía búsqueda cruzada estratificada) respaldado por un **Análisis Exploratorio de Datos (EDA)** directamente integrado en el frontend, demostrando qué ocurre exactamente bajo el capó sin perder la perspectiva ejecutiva. 
 
-Este proyecto está diseñado a nivel de un Data Scientist Senior, traduciendo métricas frías en decisiones cuantificables.
 
 ## 🚀 Instalación y Uso
 
