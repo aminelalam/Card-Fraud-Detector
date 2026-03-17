@@ -1,106 +1,80 @@
-# FraudGuard AI - Credit Card Fraud Detection System
+# 🛡️ FraudGuard AI - Sistema Inteligente de Prevención de Fraude
 
-A complete machine learning pipeline + interactive dashboard for detecting fraudulent credit card transactions.
+![Python](https://img.shields.io/badge/Python-3.13-blue.svg) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-1.7-green.svg) ![Machine Learning](https://img.shields.io/badge/Machine_Learning-Scikit_Learn-orange.svg)
 
-Built with **XGBoost**, **scikit-learn**, **imbalanced-learn**, and **Streamlit**.
+Un *pipeline* completo de Machine Learning y *dashboard* analítico interactivo diseñado para detectar transacciones fraudulentas con tarjetas de crédito, optimizando el retorno de inversión (ROI) del negocio.
 
----
+## 🌟 Puntos Destacados
 
-## Features
+- **Enfoque de Negocio**: No solo mide precisión técnica, sino **impacto financiero**. El modelo se evalúa por el capital salvado vs. la pérdida potencial.
+- **Selección Dinámica de Modelos**: Escoge el modelo campeón evaluando múltiples arquitecturas (Regresión Logística, Random Forest, XGBoost) optimizando el **F1-Score**.
+- **Manejo de Desbalanceo Extremo**: Técnicas robustas (`scale_pos_weight`, SMOTE) para abordar un dataset donde el fraude representa solo el 0.17%.
+- **Dashboard Interactivo**: Una interfaz limpia, moderna y enfocada a la toma de decisiones construida con Streamlit y Plotly.
 
-### ML Pipeline (`train_model.py`)
-- **RobustScaler** preprocessing for Time & Amount features
-- **Temporal train/test split** (80/20 chronological - no data leakage)
-- **5 model comparison**: Logistic Regression, Random Forest, XGBoost (balanced/unbalanced), XGBoost + SMOTE
-- **StratifiedKFold** 5-fold cross-validation
-- **RandomizedSearchCV** hyperparameter tuning (30 iterations)
-- Business-oriented evaluation: **Recall**, **PR-AUC**, **Confusion Matrix**
+## ℹ️ Resumen
 
-### Streamlit Dashboard (`app.py`)
-- **Dashboard EDA** - Interactive charts: V1 vs V2 scatter, fraud-by-hour, amount distribution
-- **Fraud Simulator** - Real-time prediction with confidence score and latency
-- **Model Performance** - Confusion matrix, PR-AUC curve, benchmark table, expert review notes
+FraudGuard AI es la solución integral a la problemática crítica del fraude financiero. Más allá de presentar métricas en el vacío, este proyecto traduce cada *True Positive* en euros recuperados y cada *False Positive* en fricción al cliente evitada.
 
----
+El componente central es un modelo **XGBoost optimizado** (con hiperparámetros afinados vía búsqueda cruzada estratificada) respaldado por un **Análisis Exploratorio de Datos (EDA)** directamente integrado en el frontend, demostrando qué ocurre exactamente bajo el capó sin perder la perspectiva ejecutiva. 
 
-## Quick Start
+Este proyecto está diseñado a nivel de un Data Scientist Senior, traduciendo métricas frías en decisiones cuantificables.
 
-```bash
-# 1. Install dependencies
-pip install -r requirements.txt
+## 🚀 Instalación y Uso
 
-# 2. Train models (generates models/*.joblib + charts)
-python train_model.py
+Sigue estos pasos para arrancar el proyecto o simular modelos:
 
-# 3. Launch dashboard
-streamlit run app.py
-```
+### Prerrequisitos
+- **Python 3.10+** (Recomendado 3.13)
+- Descargar el dataset original desde [Kaggle](https://www.kaggle.com/mlg-ulb/creditcardfraud).
+- Debes guardar el archivo en la raíz del proyecto comprimido bajo el nombre `creditcard.zip`.
 
----
+### Pasos
 
-## Project Structure
+1. **Instalar dependencias:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```
-archive/
-├── app.py                 # Streamlit dashboard (3 pages)
-├── train_model.py         # Full ML training pipeline
-├── requirements.txt       # Python dependencies
-├── README.md              # This file
-├── creditcard.csv          # Dataset (284,807 transactions)
-├── models/
-│   ├── best_model.joblib  # Tuned XGBoost model
-│   ├── scaler.joblib      # Fitted RobustScaler
-│   ├── metrics.json       # All model metrics & comparison data
-│   ├── eda_charts.png     # EDA visualizations
-│   ├── confusion_pr_curve.png
-│   └── model_comparison.png
-└── notebooks/             # Jupyter notebooks (EDA research)
-```
+2. **Entrenar los modelos:**
+   El pipeline de entrenamiento compite varios modelos, aplica escalado robusto, ajusta hiperparámetros recursivos y guarda automáticamente el ganador ("Campeón"):
+   ```bash
+   python train_model.py
+   ```
 
----
+3. **Lanzar el Dashboard Operativo:**
+   Levanta la interfaz web donde podrás interactuar con las analíticas generadas.
+   ```bash
+   streamlit run app.py
+   ```
 
-## Model Results
+## 🧠 Arquitectura y Decisiones de Modelado
 
-| Model | Recall | Precision | PR-AUC | ROC-AUC |
-|-------|--------|-----------|--------|---------|
-| Logistic Regression | 0.893 | 0.071 | 0.760 | 0.986 |
-| Random Forest | 0.653 | 0.980 | 0.802 | 0.938 |
-| **XGBoost (Tuned)** | **0.760** | **0.851** | **0.794** | **0.982** |
-| XGBoost + SMOTE | 0.760 | 0.851 | 0.788 | 0.977 |
-| XGBoost (unbalanced) | 0.707 | 0.914 | 0.728 | 0.967 |
+Se tomaron decisiones estratégicas agresivas para asegurar que el modelo sea robusto en producción:
 
-> **Why not Accuracy?** With 99.83% legitimate transactions, a model that predicts "legit" for everything scores 99.83% accuracy. That's useless. We optimize for **Recall** (catching fraudsters) and **PR-AUC** (the industry standard for imbalanced data).
+*   **Separación Temporal vs Aleatoria**: Para simular la realidad operativa, la separación `train`/`test` (80/20) se realiza cronológicamente. Entrenamos con el pasado para predecir el futuro, evitando de raíz las fugas de información (*data leakage*).
+*   **Preprocesamiento Resiliente**: Se utiliza `RobustScaler` basado en el rango intercuartílico, mitigando el enorme efecto enmascarador de los valores extremos presentes naturalmente en los importes de fraude.
+*   **F1-Score como Árbitro Principal**: A diferencia de un simple *Accuracy*, *Precision* o *Recall*, el F1-Score garantiza un equilibrio perfecto. Esto es vital en el negocio: no debemos bloquear masivamente tarjetas legítimas generando fricción (Falso Positivo), pero tampoco debemos dejar pasar el ataque (Falso Negativo). El **PR-AUC** actúa como métrica de apoyo indiscutible ante el desbalanceo.
+*   **Ajuste y Equilibrio del XGBoost**: Cálculo dinámico del `scale_pos_weight` y ejecución de un `RandomizedSearchCV` estratificado a 5 pliegues para asegurar un entrenamiento equitativo sin sesgos al descubrir al modelo ganador.
 
----
+## 📊 Vistazo al Dashboard
 
-## Key Design Decisions
+El monitor directivo en `app.py` expone:
+1. **Métricas Financieras de Impacto**: Cálculo del "Riesgo de Exposición Absoluta" frente al "Dinero Salvado por el Modelo".
+2. **Análisis Exploratorio Bivariante**: Identificación de la franja horaria crítica (fraudes subyacentes vs volumen general) y distribución de densidad de aportes económicos.
+3. **Mapeo Dimensional de Transacciones**: Un *scatter plot* enriquecido submuestreado inteligentemente para ubicar zonas de fraude originadas de un análisis PCA (`V1`, `V2`).
+4. **Benchmarking Transparente**: Curva PR (*Precision-Recall*) y comparativa en barras detallando la elección del campeón sobre otros aspirantes.
 
-1. **RobustScaler > StandardScaler**: Time and Amount have extreme outliers from fraudulent transactions. RobustScaler uses the IQR, making it resilient to these spikes.
+## 🛠️ Stack Tecnológico
 
-2. **Temporal Split > Random Split**: In production, you predict future transactions based on past data. A random split would leak future information into training.
+*   **Ciencia de Datos & ML**: `pandas`, `numpy`, `scikit-learn`, `imbalanced-learn`, `xgboost`
+*   **Frontend Web**: `streamlit`, `plotly`
+*   **Arquitectura de Guardado**: `joblib`, serialización JSON (`metrics.json`)
 
-3. **Balanced vs Unbalanced**: Using `scale_pos_weight` improved XGBoost recall by **+5.3%** — a critical gain when each missed fraud costs real money.
+## 🤝 Contribuir y Feedback
 
-4. **SMOTE applied only to training data**: Synthetic oversampling on test data would give misleadingly optimistic results.
+¿Te interesa mejorar la visualización empírica, refinar cómo se evalúan económicamente los falsos positivos o investigar un nuevo clasificador? 
+
+Las aportaciones al ecosistema Open Source son bienvenidas. Por favor **abre una Issue** para iniciar una discusión arquitectónica o envía tu **Pull Request**. Si esto te inspira, ¡déjanos tu feedback y una estrella en el repositorio!
 
 ---
-
-## Dataset
-
-[Kaggle Credit Card Fraud Detection](https://www.kaggle.com/mlg-ulb/creditcardfraud)
-- 284,807 transactions (Sep 2013, European cardholders)
-- 492 frauds (0.17%)
-- V1-V28: PCA-transformed features (anonymized)
-- Time: seconds elapsed from first transaction
-- Amount: transaction amount
-
----
-
-## Tech Stack
-
-- **Python 3.13** | **scikit-learn** | **XGBoost** | **imbalanced-learn**
-- **Streamlit** | **Plotly** | **Seaborn** | **Pandas**
-
----
-
-*Built as a portfolio project demonstrating end-to-end ML engineering for fraud detection.*
+✍️ *Este proyecto es una muestra end-to-end de Ingeniería e Inteligencia de Datos enfocado enteramente en un contexto de aplicabilidad corporativa real.*
