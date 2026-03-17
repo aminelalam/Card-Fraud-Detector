@@ -32,7 +32,7 @@ import joblib
 
 SEMILLA = 42
 DIR_MODELOS = os.path.join(os.path.dirname(__file__), "models")
-RUTA_DATOS = os.path.join(os.path.dirname(__file__), "creditcard.csv")
+RUTA_DATOS = os.path.join(os.path.dirname(__file__), "creditcard.zip")
 
 os.makedirs(DIR_MODELOS, exist_ok=True)
 

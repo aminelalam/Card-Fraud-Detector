@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from sklearn.metrics import recall_score, average_precision_score
 
-RUTA_DATOS = os.path.join(os.path.dirname(__file__), "creditcard.csv")
+RUTA_DATOS = os.path.join(os.path.dirname(__file__), "creditcard.zip")
 
 print("Cargando datos para validación múltiple (3 runs)...")
 df = pd.read_csv(RUTA_DATOS)

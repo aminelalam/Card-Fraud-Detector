@@ -16,7 +16,7 @@ import random
 
 DIR_RAIZ = os.path.dirname(os.path.abspath(__file__))
 DIR_MODELOS = os.path.join(DIR_RAIZ, "models")
-RUTA_DATOS = os.path.join(DIR_RAIZ, "creditcard.csv")
+RUTA_DATOS = os.path.join(DIR_RAIZ, "creditcard.zip")
 
 st.set_page_config(page_title="Detección de Fraude", layout="wide", initial_sidebar_state="collapsed")
 
