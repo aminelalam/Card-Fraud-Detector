@@ -70,11 +70,3 @@ El monitor directivo en `app.py` expone:
 *   **Frontend Web**: `streamlit`, `plotly`
 *   **Arquitectura de Guardado**: `joblib`, serialización JSON (`metrics.json`)
 
-## 🤝 Contribuir y Feedback
-
-¿Te interesa mejorar la visualización empírica, refinar cómo se evalúan económicamente los falsos positivos o investigar un nuevo clasificador? 
-
-Las aportaciones al ecosistema Open Source son bienvenidas. Por favor **abre una Issue** para iniciar una discusión arquitectónica o envía tu **Pull Request**. Si esto te inspira, ¡déjanos tu feedback y una estrella en el repositorio!
-
----
-✍️ *Este proyecto es una muestra end-to-end de Ingeniería e Inteligencia de Datos enfocado enteramente en un contexto de aplicabilidad corporativa real.*
